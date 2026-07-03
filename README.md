@@ -15,7 +15,7 @@ _More learning skills (review, curate, …) will be added to the same namespace 
 ## Install (Claude Code plugin — namespaced)
 
 ```
-/plugin marketplace add rimakes/learning-skills
+/plugin marketplace add RicSala/learning-skills
 /plugin install learning@rimakes-learning
 ```
 
@@ -32,7 +32,7 @@ You can change it later from the plugin's configuration in Claude Code.
 ## Install (skills.sh / any agent — single skill)
 
 ```
-npx skills add rimakes/learning-skills
+npx skills add RicSala/learning-skills
 ```
 
 This installs the raw `SKILL.md` files (without the `learning:` namespace prefix, which is
