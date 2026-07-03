@@ -55,15 +55,19 @@ your Desktop. Works on macOS, Linux and Windows (including OneDrive-redirected D
 ```
 learning-skills/
 ├── .claude-plugin/
-│   ├── plugin.json          # the "learning" plugin (name = namespace prefix)
-│   └── marketplace.json     # makes this repo an installable marketplace
-└── skills/
-    └── capture/
-        └── SKILL.md         # → learning:capture
+│   └── marketplace.json         # makes this repo an installable marketplace
+└── plugins/
+    └── learning/                # the "learning" plugin (name = namespace prefix)
+        ├── .claude-plugin/
+        │   └── plugin.json
+        └── skills/
+            └── capture/
+                └── SKILL.md     # → learning:capture
 ```
 
-To add another skill, drop a new folder under `skills/` (e.g. `skills/review/SKILL.md`);
-it automatically joins the `learning:` namespace — no manifest change needed.
+To add another skill, drop a new folder under `plugins/learning/skills/`
+(e.g. `plugins/learning/skills/review/SKILL.md`); it automatically joins the
+`learning:` namespace — no manifest change needed.
 
 ## License
 
