@@ -40,10 +40,15 @@ a Claude Code plugin feature). Since plugin config isn't applied in this mode, s
 folder with an environment variable instead:
 
 ```bash
-export LEARNINGS_DIR="$HOME/Notes/Learnings"   # optional; defaults to ~/Desktop/Learnings
+# macOS / Linux / Git Bash
+export LEARNINGS_DIR="$HOME/Notes/Learnings"        # optional; defaults to the Desktop
+
+# Windows PowerShell
+$env:LEARNINGS_DIR = "$env:USERPROFILE\Notes\Learnings"
 ```
 
-Each skill resolves its folder as: plugin config → `LEARNINGS_DIR` → `~/Desktop/Learnings`.
+Each skill resolves its folder as: plugin config → `LEARNINGS_DIR` → `Learnings` on
+your Desktop. Works on macOS, Linux and Windows (including OneDrive-redirected Desktops).
 
 ## Repo layout
 

@@ -42,9 +42,22 @@ resolve its path at the very start of every run and reuse it throughout.
    substituted.
 3. The default `~/Desktop/Learnings`.
 
-Run this first. It picks the configured path, ignores the literal placeholder if
-the plugin runtime didn't substitute it, expands a leading `~`, exports the
-result as `$LEARNINGS`, and ensures the folder exists:
+Resolve the path yourself using the current operating system, then create the
+folder and reuse the resulting **absolute** path everywhere below:
+
+- Take the first source that is set: `${user_config.learnings_dir}` → the
+  `LEARNINGS_DIR` env var → the default.
+- Treat `${user_config.learnings_dir}` as unset if it is empty or still contains
+  the literal, unsubstituted text `${user_config.learnings_dir}`.
+- Expand a home-relative prefix for the OS: `~` / `$HOME` on macOS and Linux,
+  `%USERPROFILE%` (`$HOME` under Git Bash) on Windows.
+- **Default** = the `Learnings` folder on the user's Desktop. On Windows, if the
+  Desktop is redirected into OneDrive, use the OneDrive Desktop
+  (`~/OneDrive/Desktop/Learnings`) instead of `~/Desktop/Learnings`.
+- Create it if missing (`mkdir -p` / `New-Item -ItemType Directory -Force`).
+
+On macOS/Linux (or Windows Git Bash) this one-liner does all of the above and
+leaves the resolved path in `$LEARNINGS`:
 
 ```bash
 CONFIGURED='${user_config.learnings_dir}'
@@ -56,8 +69,11 @@ mkdir -p "$LEARNINGS"
 echo "Saving learnings to: $LEARNINGS"
 ```
 
-Use `$LEARNINGS` (the resolved absolute path) everywhere below instead of any
-hardcoded folder.
+On Windows PowerShell, resolve it with the same precedence and use
+`$env:USERPROFILE` for the home directory.
+
+Below, "`$LEARNINGS`" means the resolved absolute path — use it directly, or its
+literal value on shells without that variable.
 
 ## What a learning is
 
