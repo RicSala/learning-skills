@@ -21,6 +21,14 @@ _More learning skills (review, curate, …) will be added to the same namespace 
 
 Skills then appear as `learning:capture`, `learning:review`, etc.
 
+When you enable the plugin, Claude Code prompts you for one setting:
+
+| Setting | Type | Default | Purpose |
+|---------|------|---------|---------|
+| **Learnings folder** (`learnings_dir`) | directory | `~/Desktop/Learnings` | Where every learning note is saved. Shared by all skills in the `learning:` namespace. |
+
+You can change it later from the plugin's configuration in Claude Code.
+
 ## Install (skills.sh / any agent — single skill)
 
 ```
@@ -28,7 +36,14 @@ npx skills add rimakes/learning-skills
 ```
 
 This installs the raw `SKILL.md` files (without the `learning:` namespace prefix, which is
-a Claude Code plugin feature).
+a Claude Code plugin feature). Since plugin config isn't applied in this mode, set the
+folder with an environment variable instead:
+
+```bash
+export LEARNINGS_DIR="$HOME/Notes/Learnings"   # optional; defaults to ~/Desktop/Learnings
+```
+
+Each skill resolves its folder as: plugin config → `LEARNINGS_DIR` → `~/Desktop/Learnings`.
 
 ## Repo layout
 

@@ -29,14 +29,35 @@ you have almost certainly under-explained.
 
 ## Where learnings live
 
-Everything goes in **`~/Desktop/Learnings/`** — one Markdown file per
-independent learning, plus a `README.md` index.
+Everything goes in **one central folder** — one Markdown file per independent
+learning, plus a `README.md` index. The folder is **user-configurable**, so
+resolve its path at the very start of every run and reuse it throughout.
 
-Always run this first so the folder exists:
+**Resolution order** (first match wins):
+
+1. The plugin config value `${user_config.learnings_dir}` — set by the user when
+   they enabled this plugin in Claude Code.
+2. The `LEARNINGS_DIR` environment variable — used when this skill was installed
+   standalone (e.g. via `npx skills` / skills.sh), where plugin config is not
+   substituted.
+3. The default `~/Desktop/Learnings`.
+
+Run this first. It picks the configured path, ignores the literal placeholder if
+the plugin runtime didn't substitute it, expands a leading `~`, exports the
+result as `$LEARNINGS`, and ensures the folder exists:
 
 ```bash
-mkdir -p ~/Desktop/Learnings
+CONFIGURED='${user_config.learnings_dir}'
+case "$CONFIGURED" in
+  ''|'${user_config.learnings_dir}') CONFIGURED="${LEARNINGS_DIR:-$HOME/Desktop/Learnings}" ;;
+esac
+LEARNINGS="${CONFIGURED/#\~/$HOME}"   # expand a leading ~
+mkdir -p "$LEARNINGS"
+echo "Saving learnings to: $LEARNINGS"
 ```
+
+Use `$LEARNINGS` (the resolved absolute path) everywhere below instead of any
+hardcoded folder.
 
 ## What a learning is
 
@@ -57,26 +78,29 @@ repeat.
 
 ## Workflow
 
-1. **Check for duplicates.** List `~/Desktop/Learnings/` and look for a file on
-   the same topic. If one already exists, **update it** instead of creating a
-   duplicate.
+0. **Resolve `$LEARNINGS`** using the block in "Where learnings live" above.
+   Every path below is relative to it.
+1. **Check for duplicates.** List `$LEARNINGS/` and look for a file on the same
+   topic. If one already exists, **update it** instead of creating a duplicate.
 2. **Draft the learning** using the template below.
 3. **Show the draft to the user and confirm before writing.** The user is the
    one who has to learn from it — let them correct anything inaccurate, missing,
    or unclear first.
-4. **Write the file** as `~/Desktop/Learnings/YYYY-MM-DD-short-descriptive-title.md`
+4. **Write the file** as `$LEARNINGS/YYYY-MM-DD-short-descriptive-title.md`
    (today's real date, kebab-case title).
-5. **Update the index** `~/Desktop/Learnings/README.md` (see below).
+5. **Update the index** `$LEARNINGS/README.md` (see below).
 6. **Tell the user how to open it in Cursor.** Always finish your reply with a
    ready-to-paste command (one per file written or updated) so the user can
    jump straight into the document and review/edit it:
 
    ```bash
-   cursor ~/Desktop/Learnings/YYYY-MM-DD-short-descriptive-title.md
+   cursor "$LEARNINGS/YYYY-MM-DD-short-descriptive-title.md"
    ```
 
    If multiple learnings were captured in one session, list one `cursor ...`
-   command per file. Use the literal `~` path so it works from any cwd.
+   command per file. In the command you show the user, substitute the **actual
+   resolved absolute path** (the value of `$LEARNINGS`) — not the literal text
+   `$LEARNINGS`, since their shell won't have that variable set later.
    Don't open the file automatically — just give the user the command.
 
 When triggering proactively (the user had a learning moment but didn't ask to
@@ -228,7 +252,7 @@ A: ...
 
 ## Index (README.md)
 
-Keep `~/Desktop/Learnings/README.md` as a browsable index. After adding or
+Keep `$LEARNINGS/README.md` as a browsable index. After adding or
 updating a learning, ensure it has a row in the table:
 
 ```markdown

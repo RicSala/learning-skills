@@ -1,6 +1,6 @@
 {
   "name": "learning",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Capture, review and curate coding learnings into one central folder so notes are never scattered across projects again.",
   "author": {
     "name": "Ricardo Sala",
@@ -9,5 +9,14 @@
   "homepage": "https://github.com/rimakes/learning-skills",
   "repository": "https://github.com/rimakes/learning-skills",
   "license": "MIT",
-  "keywords": ["learning", "notes", "documentation", "knowledge", "capture"]
+  "keywords": ["learning", "notes", "documentation", "knowledge", "capture"],
+  "userConfig": {
+    "learnings_dir": {
+      "type": "directory",
+      "title": "Learnings folder",
+      "description": "Absolute path to the folder where your learning notes will be saved. Shared by every skill in this plugin.",
+      "default": "~/Desktop/Learnings",
+      "required": false
+    }
+  }
 }
