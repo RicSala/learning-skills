@@ -1,0 +1,13 @@
+{
+  "name": "learning",
+  "version": "1.0.0",
+  "description": "Capture, review and curate coding learnings into one central folder so notes are never scattered across projects again.",
+  "author": {
+    "name": "Ricardo Sala",
+    "email": "ricardo@rimakes.com"
+  },
+  "homepage": "https://github.com/rimakes/learning-skills",
+  "repository": "https://github.com/rimakes/learning-skills",
+  "license": "MIT",
+  "keywords": ["learning", "notes", "documentation", "knowledge", "capture"]
+}

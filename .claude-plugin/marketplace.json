@@ -1,0 +1,17 @@
+{
+  "name": "rimakes-learning",
+  "owner": {
+    "name": "Ricardo Sala",
+    "email": "ricardo@rimakes.com"
+  },
+  "description": "Learning-capture skills for Claude Code — save what you learn while coding into one central, teachable knowledge base.",
+  "plugins": [
+    {
+      "name": "learning",
+      "source": ".",
+      "description": "Capture, review and curate coding learnings into one central folder.",
+      "category": "productivity",
+      "keywords": ["learning", "notes", "documentation"]
+    }
+  ]
+}
